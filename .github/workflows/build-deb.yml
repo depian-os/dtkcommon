@@ -69,8 +69,10 @@ jobs:
         
     - name: Copy deb to apt-repository pool
       run: |
-        # Remove debug symbols packages
-        rm ../*dbgsym*.deb
+        # Remove debug symbols packages if they exist
+        if ls ../*dbgsym*.deb 1> /dev/null 2>&1; then
+          rm ../*dbgsym*.deb
+        fi
         
         # Clone apt-repository repository
         git clone https://github.com/${{ github.repository_owner }}/apt-repository.git
